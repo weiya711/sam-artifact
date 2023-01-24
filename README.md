@@ -4,12 +4,13 @@ Repo for SAM artifact generation
 ## Overview
 - Getting Started (X human-minutes + X compute-minutes)
 - Build Docker (X human-minutes + X compute-minutes)
-- Run and Validate Experiments:
-    - Run and Validate Table 1: SAM Graph Properties (X human-minutes + X compute-minutes)
-    - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
-    - Run and Validate Figure 11, 12, 13:  ()
-    - Run and Validate Figure 14: Stream Overhead ()
-    - Run and Validate Figure 15: ExTensor Memory Model () 
+- Run Experiments:
+    - Run Table 1: SAM Graph Properties (X human-minutes + X compute-minutes)
+    - Run Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
+    - Run Figure 11, 12, 13:  ()
+    - Run Figure 14: Stream Overhead ()
+    - Run Figure 15: ExTensor Memory Model () 
+- Validate Results
 - How to reuse beyond the paper ( X human-minutes + X compute-)
 
 ## Getting Started
@@ -104,5 +105,9 @@ cd ../..
       csvs and aggregates the data in to one final csv
       `sam-artifact/sam/suitesparse_stream_overhead.csv`
 - Run `XXX`, a plotting script to visualize `suitesparse_stream_overhead.csv` 
-- Validate that the plot matches Figure 14 on page 12. 
-
+```
+python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
+```
+    - The `stream_overhead_plots.png` filename can be changed to another name. 
+    - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
+- Validate that the plot in `stream_overhead_plots.png`  matches Figure 14 on page 12.  
