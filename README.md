@@ -47,6 +47,9 @@ cd taco-website
 cd ..
 ```
 
+## Run and Validate Figure 11, 12, and 13: 
+
+
 ## Run and Validate Figure 14: Stream Overhead
 
 - Randomly choose 15 Suitesparse matrices to get their stream overheads. Run the following:
@@ -54,17 +57,52 @@ cd ..
 cd sam/scripts/tensor_names
 python get_benchmark_data.py` 
 ```
-`get_benchmark_data.py` will generate `./suitesparse_benchmarks.txt` which has the names of 15 suitesparse
-matrices that are valid (do not OOM). The script randomly chooses 5 from each of the following: 
-    1. `suitesparse_small50.txt` (the smallest 50 (based on dense dimension size) valid matrices) 
-    2. `suitesparse_mid50.txt` (the median 50 (based on dense dimension size) valid matrices)  
-    3. `suitesparse_large50.txt` (the largest 50 (based on dense dimension size) valid matrices) 
-        - `get_benchmar_data.py` also takes in three inputs: `--seed` (defaults to 0,
-           changing this will change the randomness seed), `--num` (defaulted to 5,
-           this arg changes the number of names sampled from each of the above files:
-           small50, mid50, and large50), and `--out_path` (defaults to
-           `suitesparse_benchmarks.txt`, changing this will change the output path for the
-           generated list of suitesparse matrix names). Running the script with the
-           default arguments will recreate Figure 14 on page XX. These numbers can be
-           changed 
+    - `get_benchmark_data.py` will generate `./suitesparse_benchmarks.txt`
+       which has the names of 15 suitesparse matrices that are valid (do not
+       OOM). The script randomly chooses 5 from each of the following: 
+        1. `suitesparse_small50.txt` (the smallest 50 (based on dense dimension size) valid matrices) 
+        2. `suitesparse_mid50.txt` (the median 50 (based on dense dimension size) valid matrices)  
+        3. `suitesparse_large50.txt` (the largest 50 (based on dense dimension size) valid matrices) 
+    - `get_benchmar_data.py` also takes in three inputs: `--seed` (defaults to 0,
+       changing this will change the randomness seed), `--num` (defaulted to 5,
+       this arg changes the number of names sampled from each of the above files:
+       small50, mid50, and large50), and `--out_path` (defaults to
+       `suitesparse_benchmarks.txt`, changing this will change the output path for the
+       generated list of suitesparse matrix names). Running the script with the
+       default arguments will recreate Figure 14 on page XX. These numbers can be
+       changed 
+- Run a script to get the stream overhead data into json files for the ramdomly selected Suitesparse matrices above. 
+```
+cd ../..
+./scripts/stream_overhead.sh scripts/tensor_names/suitesparse_benchmarks.txt 
+```
+`stream_overhead.sh` does the following: 
+    - Generates a file `./scripts/download_suitesparse_stream_overhead.sh` that
+      ONLY downloads the suitesparse matrices listed in
+      `suitesparse_benchmarks.txt`. 
+    - Executes `./scripts/download_suitesparse_stream_overhead.sh`, which
+      downloads the Suitesparse matrices using wget at the location
+      `SUITESPARSE_PATH` (set in the docker). 
+      Note: the Suitesparse dataset can be found at https://sparse.tamu.edu/
+    - Then it untars all files in `SUITESPARSE_PATH` and deletes any
+      unneccesary metadata files leaving just the Suitesparse `*.mtx` files. 
+    - Since mtx files store the matrices in coordinate (COO) format, the script also reformats
+      them to be in compressed sparse fiber/doubly-compressed sparse row
+      (CSF/DCSR) format
+    - Then it runs the SAM Graph simulation
+      `sam-artifact/sam/sim/test/final-apps/test_mat_identity_FINAL.py` for each matrix, collecting the
+      streams and counting the types of tokens in each stream, storing the data in `sam-artifact/sam/jsons/`. 
+        - Each test is only run
+          for one program iteration since the SAM simulator code (in
+          `test_mat_identity_FINAL.py`) counts cycles (loop iterations), which is not
+          system dependant. 
+        - It is important to note that `test_mat_identity_FINAL.py` is run using
+          pytest with a `--check-gold` flag, which compares the SAM simulation
+          output to a gold numpy calculation. If the pytest passes, then the computation
+          is verified and functionally correct.  
+    - Finally, the script converts all jsons in  `sam-artifact/sam/jsons/` to
+      csvs and aggregates the data in to one final csv
+      `sam-artifact/sam/suitesparse_stream_overhead.csv`
+- Run `XXX`, a plotting script to visualize `suitesparse_stream_overhead.csv` 
+- Validate that the plot matches Figure 14 on page 12. 
 
