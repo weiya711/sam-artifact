@@ -48,7 +48,7 @@ TODO
     cd /sam-artifact/sam/
     ```
 
-## Run and Validate Figure 11, 12, and 13: 
+## Run Figure 11, 12, and 13: 
 - Run the following commands
   ```
   cd /sam-artifact/sam/
@@ -58,7 +58,12 @@ TODO
   ```
   ./scripts/run_synthetics.sh
   ```
-  - `run_synthetics.sh` will run 
+  - `run_synthetics.sh` will run the pytest benchmarks that generate the data for the simulator-based cycle counts in Figures 11, 12, and 13. For each set of data, the script runs the pytest benchmark and then converts the output results into a CSV file. The pytest benchmarks include comparisons to a gold output to verify that they are correct. Three directories (`./results`, `./results-fusion`, `./results-reorder`) are created and contain the original json files from the benchmark and their conversions as CSV. This script will also create `./SYNTH_OUT_<ACCEL/REORDER/FUSION>.csv` at the directory where the script was run from (in this case `/sam-artifact/sam/`), containing the combined results of each benchmark for each study.
+  ```
+  python sam/onyx/synthetic/plot_synthetics.py 
+  ```
+  - `plot_synthetics.py` will gather the data frames from each CSV file from the previous step and use matplotlib to plot each figure from the paper accordingly. The script has an argument `--output_dir` that can be used to identify the location to output the pdfs/svgs into, but for the purposes of artifact evaluation and later instructions in this README, this argument is unnecessary.
+- This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine.
 
 ## Run and Validate Figure 14: Stream Overhead
 
