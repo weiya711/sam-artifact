@@ -37,7 +37,8 @@ WORKDIR /sam-artifact
 RUN python -m venv .
 
 WORKDIR /sam-artifact/sam
-RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest && pip install -e .
+RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest tqdm pytest-benchmark matplotlib pandas && pip install -e .
+RUN apt-get install -y python-tk
 RUN make sam
 
 COPY ./taco-website /sam-artifact/taco-website
