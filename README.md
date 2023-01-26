@@ -4,9 +4,9 @@ Repo for SAM artifact generation
 ## Overview
 - Getting Started (5 human-minutes + X compute-minutes)
 - Run Experiments:
-    - Run and Validate Table 1: SAM Graph Properties (X human-minutes + X compute-minutes)
+    - Run and Validate Table 1: SAM Graph Properties (5 human-minutes + 1 compute-minutes)
     - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
-    - Run Figure 11, 12, 13:  ()
+    - Run Figure 11, 12, 13:  (2 human-minutes + 10 compute-minutes)
     - Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
     - Run Figure 15: ExTensor Memory Model () 
 - Validate Figure Results
@@ -27,9 +27,17 @@ Repo for SAM artifact generation
   ```
   docker attach CONTAINER_ID
   ```
+- *IMPORTANT:* Do not type `exit` in the docker terminal as this will kill the container. The proper way to exit the docker is the sequence `CTRL-p, CTRL-q`.
 
-## Run and Validate Table 1 (XX human-minutes + XX compute-minutes)
-TODO
+## Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
+- Run the following command
+  ```
+  python scripts/collect_node_counts.py
+  ```
+  - This script will go through each of the SAM graphs for the expressions listed in Table 1 and counts the number of each relevant primitive in the graph. 
+  - The script takes an argument `--sam_graphs` that can be pointed to the directory containing the sam graphs. This is defaulted to a safe path for the docker environment and is unnecessary for reviewers.
+  - The script also takes an argument `--output_log` which provides a file location to write the log to. The log is identical to the standard output of the script, but we provide this utility in any case. This argument is also defaulted with the docker environment in mind, so reviewers need not use it.
+- View the standard output from the script and validate that the results match the right half of Table 1.
 
 ## Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
 - Run the following commands
@@ -45,7 +53,7 @@ TODO
     cd /sam-artifact/sam/
     ```
 
-## Run Figure 11, 12, and 13: Optimizations ( XX human-minutes + XX compute-minutes) 
+## Run Figure 11, 12, and 13: Optimizations (2 human-minutes + 10 compute-minutes)
 - Run the following commands
   ```
   cd /sam-artifact/sam/
@@ -164,9 +172,20 @@ TODO
   python plot_memory_model.py matmul_ikj_tile_final.csv memory_model_plot.png
   ```
 
-
 ## Validate Figure Results
-TODO
+- Exit the docker (`CTRL-p, CTRL-q`)
+- To extract all of the images/figures from the docker to your local machine for viewing, run the following command. This needs to be done from outside the docker, starting at the top directory of this repository (`sam-artifact`).
+  ```
+  python sam/scripts/artifact_docker_copy.py --output_dir <OUTPUT_DIRECTORY> --docker_id <DOCKER_ID>
+  ```
+  - `artifact_docker_copy.py` runs a series of `docker cp` commands to pull the figures from their default locations, renaming them to be clear which figure they correspond to in the main manuscript.
+  - `--output_dir` is used to specify an output directory on the local machine for the figures to be stored in. The script will create the directory if it does not exist. All the files referenced in the next few steps will be found at this directory.
+  - `--docker_id` is used to identify the docker container ID. This should have printed when the docker was created and is the same ID used to attach to the container.
+- Validate that the plot in `figure11.pdf` matches Figure 11 on page 9.
+- Validate that the plot in `figure12.pdf` matches Figure 12 on page 9.
+- Validate that the plot in `figure13a.pdf` matches Figure 13a on page 11.
+- Validate that the plot in `figure13b.pdf` matches Figure 13b on page 11.
+- Validate that the plot in `figure13c.pdf` matches Figure 13c on page 11.
 - Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.  
 - Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.  
 
