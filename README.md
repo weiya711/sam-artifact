@@ -2,16 +2,15 @@
 Repo for SAM artifact generation
 
 ## Overview
-- Getting Started (X human-minutes + X compute-minutes)
-- Build Docker (X human-minutes + X compute-minutes)
+- Getting Started (5 human-minutes + X compute-minutes)
 - Run Experiments:
-    - Run Table 1: SAM Graph Properties (X human-minutes + X compute-minutes)
-    - Run Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
+    - Run and Validate Table 1: SAM Graph Properties (X human-minutes + X compute-minutes)
+    - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
     - Run Figure 11, 12, 13:  ()
-    - Run Figure 14: Stream Overhead ()
+    - Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
     - Run Figure 15: ExTensor Memory Model () 
-- Validate Results
-- How to reuse beyond the paper ( X human-minutes + X compute-)
+- Validate Figure Results
+- How to reuse beyond the paper ( X human-minutes + X compute-minutes )
 
 ## Getting Started
 - Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo. 
@@ -29,10 +28,10 @@ Repo for SAM artifact generation
   docker attach CONTAINER_ID
   ```
 
-## Run and Validate Table 1
+## Run and Validate Table 1 (XX human-minutes + XX compute-minutes)
 TODO
 
-## Run and Validate Table 2: TACO Website Expressions
+## Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
 - Run the following commands
   ```
   cd taco-website
@@ -46,7 +45,7 @@ TODO
     cd /sam-artifact/sam/
     ```
 
-## Run Figure 11, 12, and 13: 
+## Run Figure 11, 12, and 13: Optimizations ( XX human-minutes + XX compute-minutes) 
 - Run the following commands
   ```
   cd /sam-artifact/sam/
@@ -63,7 +62,7 @@ TODO
   - `plot_synthetics.py` will gather the data frames from each CSV file from the previous step and use matplotlib to plot each figure from the paper accordingly. The script has an argument `--output_dir` that can be used to identify the location to output the pdfs/svgs into, but for the purposes of artifact evaluation and later instructions in this README, this argument is unnecessary.
 - This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine.
 
-## Run and Validate Figure 14: Stream Overhead
+## Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
 
 - Randomly choose 15 Suitesparse matrices to get their stream overheads. Run the following:
   ```
@@ -116,10 +115,18 @@ TODO
   - Finally, the script converts all jsons in  `sam-artifact/sam/jsons/` to
     csvs and aggregates the data in to one final csv
     `sam-artifact/sam/suitesparse_stream_overhead.csv`
-- Run `XXX`, a plotting script to visualize `suitesparse_stream_overhead.csv` 
+- Run `plot_stream_overhead.py`, a plotting script to visualize `suitesparse_stream_overhead.csv` 
   ```
   python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
   ```
     - The `stream_overhead_plots.png` filename can be changed to another name. 
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
+
+## Run Figure 15: Memory Model  ( XX human-minutes + XX compute-minutes)
+TODO
+
+## Validate Figure Results
+TODO
 - Validate that the plot in `stream_overhead_plots.png`  matches Figure 14 on page 12.  
+
+## How to Reuse Artifact Beyond the Paper 
