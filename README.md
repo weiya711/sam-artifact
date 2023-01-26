@@ -123,10 +123,51 @@ TODO
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
 
 ## Run Figure 15: Memory Model  ( XX human-minutes + XX compute-minutes)
-TODO
+- Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices.
+  ```
+  cd sam/
+  ./scipts/generate_sparsity_sweep_mem_model.sh
+  ```
+  - The synthetic matrices are uniformly randomly sparse and vary across the
+    number of nonzeros (nnz) and dense dimension size (assuming the matrices
+    are square). 
+  - The matrices are then pre-tiled in coordinate space. TODO: to what size?  
+
+* Run `./scripts/few_points_memory_model ` to run a restricted (TODO) set of points from Figure 15 on page 12 of our paper that will take XX compute-minutes. 
+  ```
+  ./scripts/few_points_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+  ```
+
+* Run `./scripts/full_memory_model_runner2.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
+  ```
+  ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+  ```
+ 
+* Run `./scipts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
+  ```
+  ./scripts/ext_runner.sh extensor_NNZ_DIMSIZE.mtx
+  ```
+  - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
+  - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
+
+- The following is true for the above 3 scripts:
+  - The second argument of all scripts can either take a `0` or `1` where `0`
+    omits checking against the gold numpy computation and `1` checks against
+    gold. Changing the `0` to `1` will increase the `full_memory_model_runner.sh`
+    runtime to TODO and increase the `few_points_model_runner.sh` to XX. 
+  - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
+    - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
+  - All csvs `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_final.csv under the `sam/` directory
+
+- Once all desired points are run and stored in to matmul_ikj_tile_final.csv, run a plotting script to generate Figure 15 on page 12 as a PNG. 
+  ```
+  python plot_memory_model.py matmul_ikj_tile_final.csv memory_model_plot.png
+  ```
+
 
 ## Validate Figure Results
 TODO
-- Validate that the plot in `stream_overhead_plots.png`  matches Figure 14 on page 12.  
+- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.  
+- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.  
 
 ## How to Reuse Artifact Beyond the Paper 
