@@ -14,22 +14,20 @@ Repo for SAM artifact generation
 - How to reuse beyond the paper ( X human-minutes + X compute-)
 
 ## Getting Started
-```
-docker pull weiya711/sam-artifact:latest
-```
-
-```
-git submodule update --init --recursive
-docker build -t sam-artifact .
-```
-
-```
-docker run -d -it --rm sam-artifact bash
-``` 
-
-```
-docker attach CONTAINER
-```
+- Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo. 
+  ```
+  git submodule update --init --recursive
+  docker build -t sam-artifact .
+  ```
+- Once the image is built, run a docker container with a bash terminal
+  ```
+  docker run -d -it --rm sam-artifact bash
+  ``` 
+  - The above command should print out a `CONTAINER_ID`
+- Attach to the docker container using the command below and the `CONTAINER_ID` from the previous step 
+  ```
+  docker attach CONTAINER_ID
+  ```
 
 ## Run and Validate Table 1
 TODO
