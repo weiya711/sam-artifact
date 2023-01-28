@@ -32,6 +32,7 @@ Repo for SAM artifact generation
 ## Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
 - Run the following command
   ```
+  cd /sam-artifact/sam/
   python scripts/collect_node_counts.py
   ```
   - This script will go through each of the SAM graphs for the expressions listed in Table 1 and counts the number of each relevant primitive in the graph. 
