@@ -186,7 +186,7 @@ Repo for SAM artifact generation
 - Validate that the plot in `figure13a.pdf` matches Figure 13a on page 11.
 - Validate that the plot in `figure13b.pdf` matches Figure 13b on page 11.
 - Validate that the plot in `figure13c.pdf` matches Figure 13c on page 11.
-- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.  
-- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.  
+- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.
+- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.
 
 ## How to Reuse Artifact Beyond the Paper 

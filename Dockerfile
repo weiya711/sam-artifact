@@ -37,7 +37,7 @@ WORKDIR /sam-artifact
 RUN python -m venv .
 
 WORKDIR /sam-artifact/sam
-RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest tqdm pytest-benchmark matplotlib pandas && pip install -e .
+RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest tqdm pytest-benchmark matplotlib pandas pydot && pip install -e .
 RUN apt-get install -y python-tk
 RUN make sam
 
