@@ -127,7 +127,8 @@ Repo for SAM artifact generation
   ```
   python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
   ```
-    - The `stream_overhead_plots.png` filename can be changed to another name. 
+    - The `stream_overhead_plots.png` filename argument (#2) can be changed to another name.
+    - The script will create a plot by default at the location `sam-artifact/sam/stream_overhead_plots.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
 
 ## Run Figure 15: Memory Model  ( XX human-minutes + XX compute-minutes)
@@ -143,19 +144,19 @@ Repo for SAM artifact generation
     are square as in the Extensor evaluation. The files follow the naming scheme `extensor_mtx/extensor_NNZ_DIMSIZE.mtx` 
 - Next, choose one of the three options to run:
 
-  1. Run `./scripts/few_points_memory_model ` to run a restricted (TODO) set of points from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
+  1. Run `./scripts/few_points_memory_model_runner.sh` to run a restricted set of experiments (8) from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
     ```
-    ./scripts/few_points_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+    ./scripts/few_points_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
   
-  2. Run `./scripts/full_memory_model_runner2.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
+  2. Run `./scripts/full_memory_model_runner.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
     ```
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
    
   3. Run `./scipts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
     ```
-    ./scripts/ext_runner.sh extensor_NNZ_DIMSIZE.mtx
+    ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
     ```
     - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
     - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
@@ -164,15 +165,22 @@ Repo for SAM artifact generation
     - The second argument of all scripts can either take a `0` or `1` where `0`
       omits checking against the gold numpy computation and `1` checks against
       gold. Changing the `0` to `1` will increase the `full_memory_model_runner.sh`
-      runtime to TODO and increase the `few_points_model_runner.sh` to XX. 
+      runtime to TODO and increase the `few_points_memory_model_runner.sh` to XX. 
     - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
       - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
-    - All csvs `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_final.csv under the `sam/` directory
-
-- Once all desired points are run and stored in to matmul_ikj_tile_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
+    - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv under the `sam/` directory
+    - The data in `memory_model_out` will not be deleted unless you run the following clean command. This means that running `few_points_memory_model_runner.sh` can be combined with `singel_point_memory_model_runner.sh` to aggregate more experiments into the final `matmul_ikj_tile_pipeline_final.csv`. 
+      ```
+      ./scripts/clean_memory_model.sh
+      ```
+      which removes the `tiles/`, `memory_model_out/` and `extensor_mtx/` directories. This means that running 
+- Once all desired points are run and stored in to matmul_ikj_tile_pipeline_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
   ```
-  python plot_memory_model.py matmul_ikj_tile_final.csv memory_model_plot.png
+  python plot_memory_model.py matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
   ```
+    - The `memory_model_plot.png` filename argument (#2) can be changed to another name.
+    - The script will create a plot by default at the location `sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The `plot_memory_model.py` creates plots via matplotlib and saves those images to the file `memory_model_plot.png`
 
 ## Validate Figure Results
 - Exit the docker (`CTRL-p, CTRL-q`)
