@@ -75,7 +75,7 @@ Repo for SAM artifact generation
 - Randomly choose 15 Suitesparse matrices to get their stream overheads. Run the following:
   ```
   cd /sam-artifact/sam/scripts/tensor_names
-  python get_benchmark_data.py` 
+  python get_benchmark_data.py
   ```
     - `get_benchmark_data.py` will generate `./suitesparse_benchmarks.txt`
        which has the names of 15 suitesparse matrices that are valid (do not
@@ -110,8 +110,8 @@ Repo for SAM artifact generation
     them to be in compressed sparse fiber/doubly-compressed sparse row
     (CSF/DCSR) format
   - Then it runs the SAM Graph simulation
-    `sam-artifact/sam/sim/test/final-apps/test_mat_identity_FINAL.py` for each matrix, collecting the
-    streams and counting the types of tokens in each stream, storing the data in `sam-artifact/sam/jsons/`. 
+    `/sam-artifact/sam/sim/test/final-apps/test_mat_identity_FINAL.py` for each matrix, collecting the
+    streams and counting the types of tokens in each stream, storing the data in `/sam-artifact/sam/jsons/`. 
     - Each test is only run
       for one program iteration since the SAM simulator code (in
       `test_mat_identity_FINAL.py`) counts cycles (loop iterations), which is not
