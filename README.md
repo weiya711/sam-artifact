@@ -8,7 +8,7 @@ Repo for SAM artifact generation
     - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
     - Run Figure 11, 12, 13:  (2 human-minutes + 10 compute-minutes)
     - Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
-    - Run Figure 15: ExTensor Memory Model () 
+    - Run Figure 15: ExTensor Memory Model (5 human-minutes + up to 50 compute-hours) 
 - Validate Figure Results
 - How to reuse beyond the paper ( X human-minutes + X compute-minutes )
 
@@ -133,41 +133,43 @@ Repo for SAM artifact generation
 ## Run Figure 15: Memory Model  ( XX human-minutes + XX compute-minutes)
 - Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices.
   ```
+  # 6-8 compute-minutes
+  # takes 11MB of disk usage
   cd sam/
   ./scipts/generate_sparsity_sweep_mem_model.sh
   ```
   - The synthetic matrices are uniformly randomly sparse and vary across the
-    number of nonzeros (nnz) and dense dimension size (assuming the matrices
-    are square). 
-  - The matrices are then pre-tiled in coordinate space. TODO: to what size?  
+    number of nonzeros (nnz), `NNZ`, and dense dimension size, `DIMSIZE`. We assume the matrices
+    are square as in the Extensor evaluation. The files follow the naming scheme `extensor_mtx/extensor_NNZ_DIMSIZE.mtx` 
+- Next, choose one of the three options to run:
 
-* Run `./scripts/few_points_memory_model ` to run a restricted (TODO) set of points from Figure 15 on page 12 of our paper that will take XX compute-minutes. 
-  ```
-  ./scripts/few_points_model_runner.sh memory_config_extensor_17M_llb.yaml 0
-  ```
+  1. Run `./scripts/few_points_memory_model ` to run a restricted (TODO) set of points from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
+    ```
+    ./scripts/few_points_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+    ```
+  
+  2. Run `./scripts/full_memory_model_runner2.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
+    ```
+    ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+    ```
+   
+  3. Run `./scipts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
+    ```
+    ./scripts/ext_runner.sh extensor_NNZ_DIMSIZE.mtx
+    ```
+    - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
+    - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
 
-* Run `./scripts/full_memory_model_runner2.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
-  ```
-  ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
-  ```
- 
-* Run `./scipts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
-  ```
-  ./scripts/ext_runner.sh extensor_NNZ_DIMSIZE.mtx
-  ```
-  - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
-  - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
+  - The following is true for the above 3 scripts:
+    - The second argument of all scripts can either take a `0` or `1` where `0`
+      omits checking against the gold numpy computation and `1` checks against
+      gold. Changing the `0` to `1` will increase the `full_memory_model_runner.sh`
+      runtime to TODO and increase the `few_points_model_runner.sh` to XX. 
+    - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
+      - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
+    - All csvs `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_final.csv under the `sam/` directory
 
-- The following is true for the above 3 scripts:
-  - The second argument of all scripts can either take a `0` or `1` where `0`
-    omits checking against the gold numpy computation and `1` checks against
-    gold. Changing the `0` to `1` will increase the `full_memory_model_runner.sh`
-    runtime to TODO and increase the `few_points_model_runner.sh` to XX. 
-  - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
-    - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
-  - All csvs `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_final.csv under the `sam/` directory
-
-- Once all desired points are run and stored in to matmul_ikj_tile_final.csv, run a plotting script to generate Figure 15 on page 12 as a PNG. 
+- Once all desired points are run and stored in to matmul_ikj_tile_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
   ```
   python plot_memory_model.py matmul_ikj_tile_final.csv memory_model_plot.png
   ```
