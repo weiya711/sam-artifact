@@ -13,7 +13,8 @@ Repo for SAM artifact generation
 - How to reuse beyond the paper ( X human-minutes + X compute-minutes )
 
 ## Getting Started
-- Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo. 
+This guide assumes the user has a working installation of Docker and some version of python 3 installed.
+- Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo.
   ```
   git submodule update --init --recursive
   docker build -t sam-artifact .
