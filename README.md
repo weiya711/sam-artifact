@@ -138,7 +138,7 @@ This guide assumes the user has a working installation of Docker and some versio
   # 6-8 compute-minutes
   # takes 11MB of disk usage
   cd sam/
-  ./scipts/generate_sparsity_sweep_mem_model.sh
+  ./scripts/generate_sparsity_sweep_mem_model.sh
   ```
   - The synthetic matrices are uniformly randomly sparse and vary across the
     number of nonzeros (nnz), `NNZ`, and dense dimension size, `DIMSIZE`. We assume the matrices
