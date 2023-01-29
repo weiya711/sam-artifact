@@ -37,7 +37,7 @@ WORKDIR /sam-artifact
 RUN python -m venv .
 
 WORKDIR /sam-artifact/sam
-RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest tqdm pytest-benchmark matplotlib pandas && pip install -e .
+RUN source /sam-artifact/bin/activate && pip install scipy numpy pytest tqdm pytest-benchmark matplotlib pandas pydot && pip install -e .
 RUN apt-get install -y python-tk
 RUN make sam
 
@@ -45,3 +45,8 @@ COPY ./taco-website /sam-artifact/taco-website
 WORKDIR /sam-artifact
 
 RUN echo "source /sam-artifact/bin/activate" >> /root/.bashrc
+RUN mkdir SS
+RUN mkdir SS_F
+RUN echo "export SUITESPARSE_PATH=/sam-artifact/SS" >> /root/.bashrc
+RUN echo "export SUITESPARSE_FORMATTED_PATH=/sam-artifact/SS_F" >> /root/.bashrc
+RUN echo "export SAM_HOME=/sam-artifact/sam/" >> /root/.bashrc

@@ -32,6 +32,7 @@ Repo for SAM artifact generation
 ## Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
 - Run the following command
   ```
+  cd /sam-artifact/sam/
   python scripts/collect_node_counts.py
   ```
   - This script will go through each of the SAM graphs for the expressions listed in Table 1 and counts the number of each relevant primitive in the graph. 
@@ -75,7 +76,7 @@ Repo for SAM artifact generation
 - Randomly choose 15 Suitesparse matrices to get their stream overheads. Run the following:
   ```
   cd /sam-artifact/sam/scripts/tensor_names
-  python get_benchmark_data.py` 
+  python get_benchmark_data.py
   ```
     - `get_benchmark_data.py` will generate `./suitesparse_benchmarks.txt`
        which has the names of 15 suitesparse matrices that are valid (do not
@@ -91,7 +92,7 @@ Repo for SAM artifact generation
        generated list of suitesparse matrix names). Running the script with the
        default arguments will recreate Figure 14 on page XX. These numbers can be
        changed 
-- Run a script to get the stream overhead data into json files for the ramdomly selected Suitesparse matrices above. 
+- Run a script to get the stream overhead data into json files for the randomly selected Suitesparse matrices above. 
   ```
   cd /sam-artifact/sam/
   ./scripts/stream_overhead.sh scripts/tensor_names/suitesparse_benchmarks.txt 
@@ -110,8 +111,8 @@ Repo for SAM artifact generation
     them to be in compressed sparse fiber/doubly-compressed sparse row
     (CSF/DCSR) format
   - Then it runs the SAM Graph simulation
-    `sam-artifact/sam/sim/test/final-apps/test_mat_identity_FINAL.py` for each matrix, collecting the
-    streams and counting the types of tokens in each stream, storing the data in `sam-artifact/sam/jsons/`. 
+    `/sam-artifact/sam/sim/test/final-apps/test_mat_identity_FINAL.py` for each matrix, collecting the
+    streams and counting the types of tokens in each stream, storing the data in `/sam-artifact/sam/jsons/`. 
     - Each test is only run
       for one program iteration since the SAM simulator code (in
       `test_mat_identity_FINAL.py`) counts cycles (loop iterations), which is not
@@ -196,7 +197,7 @@ Repo for SAM artifact generation
 - Validate that the plot in `figure13a.pdf` matches Figure 13a on page 11.
 - Validate that the plot in `figure13b.pdf` matches Figure 13b on page 11.
 - Validate that the plot in `figure13c.pdf` matches Figure 13c on page 11.
-- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.  
-- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.  
+- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.
+- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.
 
 ## How to Reuse Artifact Beyond the Paper 
