@@ -45,3 +45,8 @@ COPY ./taco-website /sam-artifact/taco-website
 WORKDIR /sam-artifact
 
 RUN echo "source /sam-artifact/bin/activate" >> /root/.bashrc
+RUN mkdir SS
+RUN mkdir SS_F
+RUN echo "export SUITESPARSE_PATH=/sam-artifact/SS" >> /root/.bashrc
+RUN echo "export SUITESPARSE_FORMATTED_PATH=/sam-artifact/SS_F" >> /root/.bashrc
+RUN echo "export SAM_HOME=/sam-artifact/sam/" >> /root/.bashrc

@@ -92,7 +92,7 @@ Repo for SAM artifact generation
        generated list of suitesparse matrix names). Running the script with the
        default arguments will recreate Figure 14 on page XX. These numbers can be
        changed 
-- Run a script to get the stream overhead data into json files for the ramdomly selected Suitesparse matrices above. 
+- Run a script to get the stream overhead data into json files for the randomly selected Suitesparse matrices above. 
   ```
   cd /sam-artifact/sam/
   ./scripts/stream_overhead.sh scripts/tensor_names/suitesparse_benchmarks.txt 
