@@ -156,7 +156,7 @@ This guide assumes the user has a working installation of Docker and some versio
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
    
-  3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
+  3. Run `./scripts/single_point_memory_model_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
     ```
     ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
     ```
