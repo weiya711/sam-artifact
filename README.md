@@ -44,7 +44,7 @@ This guide assumes the user has a working installation of Docker and some versio
 ## Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
 - Run the following commands
   ```
-  cd taco-website
+  cd /sam-artifact/taco-website
   ./process.sh
   ```
   - `process.sh` will create two files `unique_formats.log` and `prim_data.log`. These file names can be changed by changing `ufname` and `fname`, respectively, located at the top of `process.sh`
@@ -170,8 +170,8 @@ This guide assumes the user has a working installation of Docker and some versio
       runtime to TODO and increase the `few_points_memory_model_runner.sh` to XX. 
     - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
       - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
-    - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv under the `sam/` directory
-    - The data in `memory_model_out` will not be deleted unless you run the following clean command. This means that running `few_points_memory_model_runner.sh` can be combined with `singel_point_memory_model_runner.sh` to aggregate more experiments into the final `matmul_ikj_tile_pipeline_final.csv`. 
+    - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv` under the `sam/` directory
+    - The data in `memory_model_out` will not be deleted unless you run the following clean command. This means that running `few_points_memory_model_runner.sh` can be combined with `single_point_memory_model_runner.sh` to aggregate more experiments into the final `matmul_ikj_tile_pipeline_final.csv`. 
       ```
       ./scripts/clean_memory_model.sh
       ```
