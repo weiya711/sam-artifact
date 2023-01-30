@@ -34,3 +34,4 @@ then
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
 fi
 
+python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
