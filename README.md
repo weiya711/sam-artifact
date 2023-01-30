@@ -131,7 +131,7 @@ create each row of Table 2 on page 10.
   python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
   ```
     - The `stream_overhead_plots.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `sam-artifact/sam/stream_overhead_plots.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `sam-artifact/sam/fig14.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
 
 ## Run Figure 15: Memory Model  (10 human-minutes + between 8 to XX compute-hours)
@@ -187,7 +187,7 @@ Next, choose one of the three options to run:
   python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
   ```
     - The `memory_model_plot.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `/sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/fig15.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_memory_model.py` creates plots via matplotlib and saves those images to the file `memory_model_plot.png`
 
 ## Validate Figure Results
@@ -201,12 +201,12 @@ Next, choose one of the three options to run:
   - `--docker_id` is used to identify the docker container ID. This should have printed when the docker was created and is the same ID used to attach to the container.
     You may also retrieve the `DOCKER_ID` again by running `docker ps` in your terminal.
 
-- Validate that the plot in `figure11.pdf` matches Figure 11 on page 9.
-- Validate that the plot in `figure12.pdf` matches Figure 12 on page 9.
-- Validate that the plot in `figure13a.pdf` matches Figure 13a on page 11.
-- Validate that the plot in `figure13b.pdf` matches Figure 13b on page 11.
-- Validate that the plot in `figure13c.pdf` matches Figure 13c on page 11.
-- Validate that the plot in `stream_overhead_plots.png` matches Figure 14 on page 11.
-- Validate that the plot in `memory_model_plot.png` matches Figure 15 on page 12.
+- Validate that the plot in `fig11.pdf` matches Figure 11 on page 9.
+- Validate that the plot in `fig12.pdf` matches Figure 12 on page 9.
+- Validate that the plot in `fig13a.pdf` matches Figure 13a on page 11.
+- Validate that the plot in `fig13b.pdf` matches Figure 13b on page 11.
+- Validate that the plot in `fig13c.pdf` matches Figure 13c on page 11.
+- Validate that the plot in `fig14.pdf` matches Figure 14 on page 11.
+- Validate that the plot in `fig15.pdf` matches Figure 15 on page 12.
 
 ## How to Reuse Artifact Beyond the Paper 
