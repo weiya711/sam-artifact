@@ -199,6 +199,8 @@ Next, choose one of the three options to run:
   - `artifact_docker_copy.py` runs a series of `docker cp` commands to pull the figures from their default locations, renaming them to be clear which figure they correspond to in the main manuscript.
   - `--output_dir` is used to specify an output directory on the local machine for the figures to be stored in. The script will create the directory if it does not exist. All the files referenced in the next few steps will be found at this directory.
   - `--docker_id` is used to identify the docker container ID. This should have printed when the docker was created and is the same ID used to attach to the container.
+    You may also retrieve the `DOCKER_ID` again by running `docker ps` in your terminal.
+
 - Validate that the plot in `figure11.pdf` matches Figure 11 on page 9.
 - Validate that the plot in `figure12.pdf` matches Figure 12 on page 9.
 - Validate that the plot in `figure13a.pdf` matches Figure 13a on page 11.
