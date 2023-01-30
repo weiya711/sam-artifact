@@ -9,7 +9,7 @@ done
 if [ -z "$memory_model" ];
 then
     echo "Defaulting memory model to one..."
-    memory_model = "one"
+    memory_model="one"
 fi
 
 if [[ "$memory_model" != "one" && "$memory_model" != "few" && "$memory_model" != "all" ]];
