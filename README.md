@@ -175,13 +175,13 @@ This guide assumes the user has a working installation of Docker and some versio
       ```
       ./scripts/clean_memory_model.sh
       ```
-      which removes the `tiles/`, `memory_model_out/` and `extensor_mtx/` directories. This means that running 
+      which removes the `tiles/`, `memory_model_out/`, and `extensor_mtx/` directories. This means that running 
 - Once all desired points are run and stored in to matmul_ikj_tile_pipeline_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
   ```
-  python plot_memory_model.py matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
+  python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
   ```
     - The `memory_model_plot.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_memory_model.py` creates plots via matplotlib and saves those images to the file `memory_model_plot.png`
 
 ## Validate Figure Results
