@@ -29,9 +29,8 @@ then
     echo "Running few..."
     ./scripts/few_points_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
 elif [[ "$memory_model" == "all" ]];
+then
     echo "Running all..."
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
-then
-
 fi
 

@@ -19,16 +19,16 @@ then
 fi
 
 # Generate Table 1...
-./scripts/generate_table_1.sh
+source /sam-artifact/scripts/generate_table_1.sh
 
 # Generate Table 2...
-./scripts/generate_table_2.sh
+source /sam-artifact/scripts/generate_table_2.sh
 
 # Generate Figures 11, 12, 13...
-./scripts/generate_figure_11_12_!3.sh
+source /sam-artifact/scripts/generate_figure_11_12_13.sh
 
 # Generate Figure 14 (Stream Overhead)
-./scripts/generate_stream_overhead.sh
+source /sam-artifact/scripts/generate_stream_overhead.sh
 
 # Generate Figure 14 (Memory Model)
-./scripts/generate_memory_model.sh -m $memory_model
+source /sam-artifact/scripts/generate_memory_model.sh -m $memory_model
