@@ -2,10 +2,10 @@
 Repo for SAM artifact generation
 
 ## Overview
-- Getting Started (5 human-minutes + X compute-minutes)
+- Getting Started (5 human-minutes + 10 compute-minutes)
 - Run Experiments:
     - Run and Validate Table 1: SAM Graph Properties (5 human-minutes + 1 compute-minutes)
-    - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
+    - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 10 compute-minutes)
     - Run Figure 11, 12, 13:  (2 human-minutes + 10 compute-minutes)
     - Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
     - Run Figure 15: ExTensor Memory Model (5 human-minutes + up to 50 compute-hours) 
@@ -33,27 +33,28 @@ This guide assumes the user has a working installation of Docker and some versio
 ## Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
 - Run the following command
   ```
-  cd /sam-artifact/sam/
+  cd sam/	# from /sam-artifact/sam/
   python scripts/collect_node_counts.py
   ```
-  - This script will go through each of the SAM graphs for the expressions listed in Table 1 and counts the number of each relevant primitive in the graph. 
+  - This script will go through each of the SAM graphs for the expressions listed in Table 1 on page 10 and counts the number of each relevant primitive in the graph. 
   - The script takes an argument `--sam_graphs` that can be pointed to the directory containing the sam graphs. This is defaulted to a safe path for the docker environment and is unnecessary for reviewers.
   - The script also takes an argument `--output_log` which provides a file location to write the log to. The log is identical to the standard output of the script, but we provide this utility in any case. This argument is also defaulted with the docker environment in mind, so reviewers need not use it.
-- View the standard output from the script and validate that the results match the right half of Table 1.
+- View the standard output from the script and validate that the results match the right half of Table 1 on page 10. 
+  - *NOTE:* The left half of Table 1 was analytically done and
+  does not have artifact code. 
+  - *NOTE:* SpM\*SpM in the artifact is only shown for the ijk dataflow order, so the CrdDrop value is 2 (which is within the range 0-2 in the paper)
 
 ## Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 8 compute-minutes)
 - Run the following commands
   ```
-  cd taco-website
+  cd /sam-artifact/taco-website
   ./process.sh
   ```
   - `process.sh` will create two files `unique_formats.log` and `prim_data.log`. These file names can be changed by changing `ufname` and `fname`, respectively, located at the top of `process.sh`
-  - `process.sh` calls the file `process_expr.py` with the correct input arguments to create a log of unique expressions, format algorithms and to create each row of Table 2.
+  - `process.sh` calls the file `process_expr.py` with the correct input
+    arguments to create a log of unique expressions, format algorithms and to
+create each row of Table 2 on page 10.
 - Open `prim_data.log` and validate that the results match Table 2 on page 10
-- Finally return to the main directory 
-    ```
-    cd /sam-artifact/sam/
-    ```
 
 ## Run Figure 11, 12, and 13: Optimizations (2 human-minutes + 10 compute-minutes)
 - Run the following commands
@@ -61,16 +62,16 @@ This guide assumes the user has a working installation of Docker and some versio
   cd /sam-artifact/sam/
   ./scripts/generate_synthetics.sh
   ```
-  - `generate_synthetics.sh` will generate a variety of data structures and matrices at `/sam-artifact/sam/synthetic`. These are used for the subsequent evaluation scripts and are necessary to proceed. There are no inputs to this script and it can be run repeatedly without any negative result. This should only take a minute or two.
+  1. `generate_synthetics.sh` will generate a variety of data structures and matrices at `/sam-artifact/sam/synthetic`. These are used for the subsequent evaluation scripts and are necessary to proceed. There are no inputs to this script and it can be run repeatedly without any negative result. This should only take a minute or two.
   ```
   ./scripts/run_synthetics.sh
   ```
-  - `run_synthetics.sh` will run the pytest benchmarks that generate the data for the simulator-based cycle counts in Figures 11, 12, and 13. For each set of data, the script runs the pytest benchmark and then converts the output results into a CSV file. The pytest benchmarks include comparisons to a gold output to verify that they are correct. Three directories (`./results`, `./results-fusion`, `./results-reorder`) are created and contain the original json files from the benchmark and their conversions as CSV. This script will also create `./SYNTH_OUT_<ACCEL/REORDER/FUSION>.csv` at the directory where the script was run from (in this case `/sam-artifact/sam/`), containing the combined results of each benchmark for each study.
+  2. `run_synthetics.sh` will run the pytest benchmarks that generate the data for the simulator-based cycle counts in Figures 11, 12, and 13. For each set of data, the script runs the pytest benchmark and then converts the output results into a CSV file. The pytest benchmarks include comparisons to a gold output to verify that they are correct. Three directories (`./results`, `./results-fusion`, `./results-reorder`) are created and contain the original json files from the benchmark and their conversions as CSV. This script will also create `./SYNTH_OUT_<ACCEL/REORDER/FUSION>.csv` at the directory where the script was run from (in this case `/sam-artifact/sam/`), containing the combined results of each benchmark for each study.
   ```
   python sam/onyx/synthetic/plot_synthetics.py 
   ```
-  - `plot_synthetics.py` will gather the data frames from each CSV file from the previous step and use matplotlib to plot each figure from the paper accordingly. The script has an argument `--output_dir` that can be used to identify the location to output the pdfs/svgs into, but for the purposes of artifact evaluation and later instructions in this README, this argument is unnecessary.
-- This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine.
+  3. `plot_synthetics.py` will gather the data frames from each CSV file from the previous step and use matplotlib to plot each figure from the paper accordingly. The script has an argument `--output_dir` that can be used to identify the location to output the pdfs/svgs into, but for the purposes of artifact evaluation and later instructions in this README, this argument is unnecessary.
+- This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine (in Section Validate Figure Results).
 
 ## Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
 
@@ -145,16 +146,21 @@ This guide assumes the user has a working installation of Docker and some versio
     number of nonzeros (nnz), `NNZ`, and dense dimension size, `DIMSIZE`. We assume the matrices
     are square as in the Extensor evaluation. The files follow the naming scheme `extensor_mtx/extensor_NNZ_DIMSIZE.mtx` 
 - Next, choose one of the three options to run:
+    - The second argument of all scripts can either take a `0` or `1`, where `0`
+      omits checking against the gold numpy computation and `1` checks against
+      gold. Changing the `0` to `1` will increase the compute runtime of all three scripts. 
 
   1. Run `./scripts/few_points_memory_model_runner.sh` to run a restricted set of experiments (8) from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
     ```
     ./scripts/few_points_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
+    - *NOTE:* Running with gold (1 as the second argument) will take 20 compute-hours.
   
-  2. Run `./scripts/full_memory_model_runner.sh` to run the full set of points from Figure 15 on page 12 that will take XX compute-minutes. The full command is:
+  2. Run `./scripts/full_memory_model_runner.sh` to run the full set of points from Figure 15 on page 12 that will take 64 compute-hours. The full command is:
     ```
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
+    - *NOTE:* Running with gold (1 as the second argument) will take XX compute-hours.
    
   3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
     ```
@@ -162,12 +168,9 @@ This guide assumes the user has a working installation of Docker and some versio
     ```
     - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
     - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
+    - *NOTE:* This script may take anywhere from 20 minutes (for NNZ=5000, DIMSIZE=1024) to 17 hours (NNZ=50000, DIMSIZE=15720) to compute
 
   - The following is true for the above 3 scripts:
-    - The second argument of all scripts can either take a `0` or `1` where `0`
-      omits checking against the gold numpy computation and `1` checks against
-      gold. Changing the `0` to `1` will increase the `full_memory_model_runner.sh`
-      runtime to TODO and increase the `few_points_memory_model_runner.sh` to XX. 
     - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test and then creates a directory called `memory_model_out` with the output. 
       - Inside this directory a json and csv file are created for each `NNZ_DIMSIZE` matrix
     - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv under the `sam/` directory
@@ -176,6 +179,7 @@ This guide assumes the user has a working installation of Docker and some versio
       ./scripts/clean_memory_model.sh
       ```
       which removes the `tiles/`, `memory_model_out/`, and `extensor_mtx/` directories. This means that running 
+
 - Once all desired points are run and stored in to matmul_ikj_tile_pipeline_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
   ```
   python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
