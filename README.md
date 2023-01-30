@@ -13,7 +13,8 @@ Repo for SAM artifact generation
 - How to reuse beyond the paper ( X human-minutes + X compute-minutes )
 
 ## Getting Started
-- Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo. 
+This guide assumes the user has a working installation of Docker and some version of python 3 installed.
+- Run the following commands to build the docker image named `sam-artifact` locally from the files in this GitHub repo.
   ```
   git submodule update --init --recursive
   docker build -t sam-artifact .
@@ -137,8 +138,8 @@ Repo for SAM artifact generation
   ```
   # 6-8 compute-minutes
   # takes 11MB of disk usage
-  cd sam/
-  ./scipts/generate_sparsity_sweep_mem_model.sh
+  cd /sam-artifact/sam/
+  ./scripts/generate_sparsity_sweep_mem_model.sh
   ```
   - The synthetic matrices are uniformly randomly sparse and vary across the
     number of nonzeros (nnz), `NNZ`, and dense dimension size, `DIMSIZE`. We assume the matrices
@@ -155,7 +156,7 @@ Repo for SAM artifact generation
     ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
     ```
    
-  3. Run `./scipts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
+  3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
     ```
     ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
     ```
@@ -174,13 +175,13 @@ Repo for SAM artifact generation
       ```
       ./scripts/clean_memory_model.sh
       ```
-      which removes the `tiles/`, `memory_model_out/` and `extensor_mtx/` directories. This means that running 
+      which removes the `tiles/`, `memory_model_out/`, and `extensor_mtx/` directories. This means that running 
 - Once all desired points are run and stored in to matmul_ikj_tile_pipeline_final.csv, run a plotting script to generate (the full/partial) Figure 15 on page 12 as a PNG. 
   ```
-  python plot_memory_model.py matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
+  python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
   ```
     - The `memory_model_plot.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/memory_model_plot.png` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_memory_model.py` creates plots via matplotlib and saves those images to the file `memory_model_plot.png`
 
 ## Validate Figure Results
