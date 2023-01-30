@@ -157,7 +157,7 @@ This guide assumes the user has a working installation of Docker and some versio
    
   3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
     ```
-    ./scripts/ext_runner.sh extensor_mtx/extensor_NNZ_DIMSIZE.mtx
+    ./scripts/ext_runner.sh extensor_NNZ_DIMSIZE.mtx
     ```
     - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
     - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
