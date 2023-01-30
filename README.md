@@ -143,39 +143,40 @@ create each row of Table 2 on page 10.
   - The synthetic matrices are uniformly randomly sparse and vary across the
     number of nonzeros (nnz), `NNZ`, and dense dimension size, `DIMSIZE`. We assume the matrices
     are square as in the Extensor evaluation. The files follow the naming scheme `extensor_mtx/extensor_NNZ_DIMSIZE.mtx` 
-- Next, choose one of the three options to run:
-  1. Run `./scripts/few_points_memory_model_runner.sh` to run a restricted set of experiments (8) from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
-    ```
-    ./scripts/few_points_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
-    ```
-    - The second argument of this script can either take a `0` or `1`, where `0`
-      omits checking against the gold numpy computation and `1` checks against
-      gold.  
-    - *NOTE:* Running with gold (1 as the second argument) will take 20 compute-hours.
-  
-  2. Run `./scripts/full_memory_model_runner.sh` to run the full set of points from Figure 15 on page 12 that will take 64 compute-hours. The full command is:
-    ```
-    ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
-    ```
-    - The second argument of this script can either take a `0` or `1`, where `0`
-      omits checking against the gold numpy computation and `1` checks against
-      gold.  
-    - *NOTE:* Running with gold (1 as the second argument) will take XX compute-hours.
-   
-  3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
-    ```
-    ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
-    ```
-    - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
-    - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
-    - This script runs with gold checks on by default.  
-    - *NOTE:* This script may take anywhere from 20 minutes (for NNZ=5000, DIMSIZE=1024) to 17 hours (NNZ=50000, DIMSIZE=15720) to compute
 
-  - The following is true for the above 3 scripts:
-    - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test
-    - The scripts create a directory called `memory_model_out` with a json and csv file for each experiment (`NNZ_DIMSIZE` matrix)
-    - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv in the same directory
-    - The data in `memory_model_out` will not be deleted unless you run the following clean command. This means that running `few_points_memory_model_runner.sh` can be combined with `single_point_memory_model_runner.sh` to aggregate more experiments into the final `matmul_ikj_tile_pipeline_final.csv`. 
+Next, choose one of the three options to run:
+1. Run `./scripts/few_points_memory_model_runner.sh` to run a restricted set of experiments (8) from Figure 15 on page 12 of our paper that will take 8 compute-hours to run. 
+   ```
+   ./scripts/few_points_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+   ```
+   - The second argument of this script can either take a `0` or `1`, where `0`
+     omits checking against the gold numpy computation and `1` checks against
+     gold.  
+   - *NOTE:* Running with gold (1 as the second argument) will take 20 compute-hours.
+
+2. Run `./scripts/full_memory_model_runner.sh` to run the full set of points from Figure 15 on page 12 that will take 64 compute-hours. The full command is:
+   ```
+   ./scripts/full_memory_model_runner.sh memory_config_extensor_17M_llb.yaml 0
+   ```
+   - The second argument of this script can either take a `0` or `1`, where `0`
+     omits checking against the gold numpy computation and `1` checks against
+     gold.  
+   - *NOTE:* Running with gold (1 as the second argument) will take XX compute-hours.
+ 
+3. Run `./scripts.ext_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
+   ```
+   ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
+   ```
+   - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
+   - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
+   - This script runs with gold checks on by default.  
+   - *NOTE:* This script may take anywhere from 20 minutes (for NNZ=5000, DIMSIZE=1024) to 17 hours (NNZ=50000, DIMSIZE=15720) to compute
+
+- The following is true for the above 3 scripts:
+  - The scripts generate a directory called `tiles` with the pre-tiled matrix for the current test
+  - The scripts create a directory called `memory_model_out` with a json and csv file for each experiment (`NNZ_DIMSIZE` matrix)
+  - All csvs in `memory_model_out` are then aggregated into a single final csv called `matmul_ikj_tile_pipeline_final.csv in the same directory
+  - The data in `memory_model_out` will not be deleted unless you run the following clean command. This means that running `few_points_memory_model_runner.sh` can be combined with `single_point_memory_model_runner.sh` to aggregate more experiments into the final `matmul_ikj_tile_pipeline_final.csv`. 
     - Running the below command removes all collateral directories (`tiles/`, `memory_model_out/`, and `extensor_mtx/`) created from this section, which means running the below command will stop accumulating experiments into the final `matmul_ikj_tile_pipeline_final.csv`.
       ```
       ./scripts/clean_memory_model.sh
