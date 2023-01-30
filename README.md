@@ -123,7 +123,7 @@ create each row of Table 2 on page 10.
       pytest with a `--check-gold` flag, which compares the SAM simulation
       output to a gold numpy calculation. If the pytest passes, then the computation
       is verified and functionally correct.  
-  - Finally, the script converts all jsons in  `sam-artifact/sam/jsons/` to
+  - Finally, the script converts all jsons in  `/sam-artifact/sam/jsons/` to
     csvs and aggregates the data in to one final csv
     `sam-artifact/sam/suitesparse_stream_overhead.csv`
 - Run `plot_stream_overhead.py`, a plotting script to visualize `suitesparse_stream_overhead.csv` 
@@ -131,7 +131,7 @@ create each row of Table 2 on page 10.
   python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
   ```
     - The `stream_overhead_plots.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `sam-artifact/sam/fig14.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/fig14.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
 
 ## Run Figure 15: Memory Model  (10 human-minutes + between 8 to XX compute-hours)
