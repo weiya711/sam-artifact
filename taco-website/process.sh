@@ -17,15 +17,15 @@ touch $fname
 echo "Getting Table 2 data"
 
 # lvlscan only compressed removed
-echo "lvlscan, uncompressed, unique (Row 2, Col Unique):" >> $fname
+echo "lvlscan, compressed, unique (Row 2, Col Unique):" >> $fname
 python process_expr.py --filename $ufname --primitive lvlscan --dense >> $fname
-echo "lvlscan, uncompressed, non-unique (Row 2, Col All):" >> $fname
+echo "lvlscan, compressed, non-unique (Row 2, Col All):" >> $fname
 python process_expr.py --clean --primitive lvlscan --dense >> $fname
 
 # lvlscan compressed and uncompressed removed
-echo "lvlscan, compressed, unique (Row 1, Col Unique):" >> $fname
+echo "lvlscan, comp. + uncomp., unique (Row 1, Col Unique):" >> $fname
 python process_expr.py --filename $ufname --primitive lvlscan >> $fname
-echo "lvlscan, compressed, non-unique (Row 1, Col All):" >> $fname
+echo "lvlscan, comp. + uncomp., non-unique (Row 1, Col All):" >> $fname
 python process_expr.py --clean --primitive lvlscan >> $fname
 
 # repeat removed
@@ -42,15 +42,15 @@ python process_expr.py --clean --primitive union >> $fname
 
 # inter removed but keep locate
 echo "inter, keep locator, unique (Row 5, Col Unique):" >> $fname
-python process_expr.py --filename $ufname --primitive inter --dense >> $fname
-echo "inter, dense, non-unique (Row 5, Col All):" >> $fname
-python process_expr.py --clean --primitive inter --dense >> $fname
+python process_expr.py --filename $ufname --primitive inter >> $fname
+echo "inter, keep locator, non-unique (Row 5, Col All):" >> $fname
+python process_expr.py --clean --primitive inter >> $fname
 
 # inter removed and locate removed
-echo "inter, w/ locator removed, unique (Row 6, Col Unique):" >> $fname
-python process_expr.py --filename $ufname --primitive inter >> $fname
-echo "inter, sparse, non-unique (Row 6, Col All):" >> $fname
-python process_expr.py --clean --primitive inter >> $fname
+echo "inter, locator removed, unique (Row 6, Col Unique):" >> $fname
+python process_expr.py --filename $ufname --primitive inter --dense >> $fname
+echo "inter, locator removed, non-unique (Row 6, Col All):" >> $fname
+python process_expr.py --clean --primitive inter --dense >> $fname
 
 # add removed
 echo "add, unique (Row 7, Col Unique):" >> $fname
@@ -77,9 +77,9 @@ echo "crddrop, non-unique (Row 10, Col All):" >> $fname
 python process_expr.py --clean --primitive crddrop >> $fname
 
 # lvlwr only compressed removed
-echo "lvlwr, comp., unique (Row 11, Col Unique):" >> $fname
+echo "lvlwr, compressed, unique (Row 11, Col Unique):" >> $fname
 python process_expr.py --filename $ufname --primitive lvlwr --dense >> $fname
-echo "lvlwr, dense, non-unique (Row 11, Col All):" >> $fname
+echo "lvlwr, compressed, non-unique (Row 11, Col All):" >> $fname
 python process_expr.py --clean --primitive lvlwr --dense >> $fname
 
 # lvlwr compressed and uncompressed removed
