@@ -22,6 +22,8 @@ This guide assumes the user has a working installation of Docker and some versio
   git submodule update --init --recursive
   docker build -t sam-artifact .
   ```
+  *NOTE:* If when running this you get an error about the `CMakeCache.txt` please run `rm -rf sam/sam/compiler/taco/build/*` from the `sam-artifact` repo. 
+
 - Once the image is built, run a docker container with a bash terminal
   ```
   docker run -d -it --rm sam-artifact bash

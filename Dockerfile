@@ -48,6 +48,12 @@ WORKDIR /sam-artifact
 RUN echo "source /sam-artifact/bin/activate" >> /root/.bashrc
 RUN mkdir SS
 RUN mkdir SS_F
+RUN mkdir FROSTT
+RUN mkdir FROSTT_F
+RUN mkdir TEMP_TENSOR
 RUN echo "export SUITESPARSE_PATH=/sam-artifact/SS" >> /root/.bashrc
 RUN echo "export SUITESPARSE_FORMATTED_PATH=/sam-artifact/SS_F" >> /root/.bashrc
+RUN echo "export FROSTT_PATH=/sam-artifact/FROSTT" >> /root/.bashrc
+RUN echo "export FROSTT_FORMATTED_PATH=/sam-artifact/FROSTT_F" >> /root/.bashrc
+RUN echo "export TACO_TENSOR_PATH=/sam-artifact/TEMP_TENSOR" >> /root/.bashrc
 RUN echo "export SAM_HOME=/sam-artifact/sam/" >> /root/.bashrc
