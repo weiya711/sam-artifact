@@ -40,8 +40,7 @@ We provide a script to generate all of the results within the container and an a
   ```
   source /sam-artifact/scripts/generate_all_results.sh
   ```
-- Upon completion, leave the docker
-
+- Once this completes, you can extract the tables/figures from the Docker container by following the instructions in the section **Validate Figure Results** in this README.
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
 - Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices (about 8 compute-minutes).
