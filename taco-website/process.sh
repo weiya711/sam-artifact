@@ -9,7 +9,7 @@ python process_expr.py --clean --unique --uformat >> $ufname
 
 # Create the file that will contain all of the primitive data for SAM
 # Evaluation Table 1
-fname=prim_data.log
+fname=tab2.log
 echo "Table 2: generating $fname which reproduces Table 2 on page 10"
 rm $fname
 touch $fname
