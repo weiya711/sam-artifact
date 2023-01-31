@@ -215,7 +215,7 @@ The pytest command also takes in these useful arguments:
 | `--ssname <TENSOR_NAME>` 	| Name of the SuiteSparse tensor to run 	| 
 
 For example, to run simulations for all of the matrix (2-dimensional) tests 
-from Table 1 on the [bcsstm04](https://sparse.tamu.edu/HB/bcsstm04) SuiteSparse
+from Table 1 on the [LFAT5](https://sparse.tamu.edu/Oberwolfach/LFAT5) SuiteSparse
 matrix with gold checking enabled, 
 use the following command: 
 ```
