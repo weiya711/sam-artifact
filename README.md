@@ -40,7 +40,7 @@ We provide a script to generate all of the results within the container and an a
   ```
   source /sam-artifact/scripts/generate_all_results.sh
   ```
-- Once this completes, you can extract the tables/figures from the Docker container by following the instructions in the section **Validate Figure Results** in this README.
+- Once this completes, you can extract the tables/figures from the Docker container by following the instructions in the section [Validate All Results](#Validate-All-Results) in this README.
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
 - Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices (about 8 compute-minutes).
@@ -95,10 +95,10 @@ Next, choose one of the three options to run:
   python ./scripts/plot_memory_model.py memory_model_out/matmul_ikj_tile_pipeline_final.csv memory_model_plot.png
   ```
     - The `memory_model_plot.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `/sam-artifact/sam/fig15.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/fig15.pdf` anyways so that the validation plot script in the [Validate All Results](#Validate-All-Results) section does not error.  
     - The `plot_memory_model.py` creates plots via matplotlib and saves those images to the file `memory_model_plot.png`
 
-## Validate Figure Results
+## Validate All Results
 - Exit the docker (`CTRL-p, CTRL-q`)
 - To extract all of the images/figures from the docker to your local machine for viewing, run the following command. This needs to be done from outside the docker, starting at the top directory of this repository (`sam-artifact`).
   ```
@@ -276,7 +276,7 @@ create each row of Table 2 on page 10.
   python sam/onyx/synthetic/plot_synthetics.py 
   ```
   3. `plot_synthetics.py` will gather the data frames from each CSV file from the previous step and use matplotlib to plot each figure from the paper accordingly. The script has an argument `--output_dir` that can be used to identify the location to output the pdfs/svgs into, but for the purposes of artifact evaluation and later instructions in this README, this argument is unnecessary.
-- This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine (in Section Validate Figure Results).
+- This is all that needs to be done for now, as a script is provided with the artifact to pull each figure out from the docker so that reviewers can view them on their local machine (in Section [Validate All Results](#Validate-All-Results)).
 
 ### Run Figure 14: Stream Overhead (5 human-minutes + 15 compute-minutes)
 
@@ -336,5 +336,5 @@ create each row of Table 2 on page 10.
   python scripts/plot_stream_overhead.py suitesparse_stream_overhead.csv stream_overhead_plots.png  
   ```
     - The `stream_overhead_plots.png` filename argument (#2) can be changed to another name.
-    - The script will create a plot by default at the location `/sam-artifact/sam/fig14.pdf` anyways so that the validation plot script in the *Validate Figure Results* section does not error.  
+    - The script will create a plot by default at the location `/sam-artifact/sam/fig14.pdf` anyways so that the validation plot script in the [Validate All Results](#Validate-All-Results) section does not error.  
     - The `plot_stream_overhead.py` creates plots via matplotlib and saves those images to the file `stream_overhead_plots.png`
