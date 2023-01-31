@@ -43,7 +43,7 @@ We provide a script to generate all of the results within the container and an a
 - Once this completes, you can extract the tables/figures from the Docker container by following the instructions in the section [Validate All Results](#Validate-All-Results) in this README.
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
-- Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices (about 8 compute-minutes).
+- Run the following command which creates a `/sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices (about 8 compute-minutes).
   ```
   cd /sam-artifact/sam/
   ./scripts/generate_sparsity_sweep_mem_model.sh
