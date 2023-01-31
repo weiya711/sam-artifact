@@ -7,8 +7,8 @@ Repo for SAM artifact generation
     - Run Top-Level Script (5 human-minutes + 1 compute-hour)
     - Run Figure 15: ExTensor Memory Model (5 human-minutes + up to 50 compute-hours) 
 - Validate All Results
-- How to Reuse Artifact Beyond the Paper ( X human-minutes + X compute-minutes )
 ----
+- [Optional] How to Reuse Artifact Beyond the Paper (10+ human-minutes + 10+ compute-minutes)
 - [Optional] Detailed Explanation of What the Top-Level Script Does 
     - Run and Validate Table 1: SAM Graph Properties (5 human-minutes + 1 compute-minutes)
     - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 10 compute-minutes)
@@ -120,7 +120,117 @@ Next, choose one of the three options to run:
 - Validate that the plot in `fig15.pdf` matches Figure 15 on page 12.
 
 ## How to Reuse Artifact Beyond the Paper 
+Please note that all active development beyond this paper are located in 
+the [sam](https://github.com/weiya711/sam/) repository and not the
+[sam-artifact](https://github.com/weiya711/sam-artifact/)` (this) repository.
+The sam repository is already included as a submodule within this repository. 
 
+### The Custard Compiler
+Our Custard compiler takes concrete index notation (or Einsum notation) and
+generates SAM graphs represented in the Graphviz DOT file format. 
+In the artifact evaluation our `Dockerfile` calls `make sam` which uses Custard
+to generates the multiple SAM graphs for Table 1. All DOT files generated can be found at 
+`/sam-artifact/sam/compiler/sam-output/dot/` and all PNG visualizations of the DOT graphs can be found at 
+`/sam-artifact/sam/compiler/sam-output/png/`. If you would like to view one of the PNGs, please copy them over from the Docker to your local machine my modifying the `/sam-artifact/sam/scripts/artifact_docker_copy.py` Python script.
+
+Beyond the graphs generated in the evaluation, you can try running the following commands to envoke Custard
+```
+cd /sam-artifact/sam/compiler/taco/build
+./bin/taco <EXPRESSION> <FORMAT> <SCHEDULE> --print-sam-graph=<FILE.gv>
+dot -Tpng <FILE.gv> -o <FILE.png>		# Converts DOT graph to PNG
+```
+
+Use `./bin/taco --help` for specific instructions on arguments to the compiler. Generally, `EXPRESSION` is a concrete index notation expression, `FORMAT` defines the tensor formats using the TACO format language, and `SCHEDULE` defines a schedule using the TACO scheduling language.
+
+An example command for SpM\*SpM IJK dataflow would be  
+```
+cd /sam-artifact/sam/compiler/taco/build
+./bin/taco "X(i,j)=B(i,k)*C(k,j)" -f=X:ss -f=B:ss -f=C:ss:1,0 -s="reorder(i,j,k)" --print-sam-graph=matmul_ijk.gv
+dot -Tpng matmul_ikj.gv -o matmul_ijk.png
+```
+
+### Formatting Datasets
+Before running a SAM simulation, we need to make sure the tensors are properly
+formatted. By default SuiteSparse and Frostt tensors come in a coordinate (COO)
+file format, however, SAM simulations need tensors to be stored in level-based
+COO, CSR, CSC, DCSR, or DCSC format where each level is a separate file.
+We have already committed two example tensors under the `/sam-artifact/sam/data/`
+for reference.
+
+To download and format a SuiteSparse tensor run the following script:
+```
+cd /sam-artifact/sam
+./scripts/download_unpack_format_suitesparse.sh <TENSOR_NAMES.txt> <BENCH>
+```
+where `TENSOR_NAMES.txt` is a text file containing all of the names of tensors
+that you would like and `BENCH` is the name of the benchmark. 
+Example TENSOR_NAMES.txt files can be found under `/sam-artifact/sam/scripts/tensor_names/`.
+Benchmark names match the names of the files in `/sam-artifact/sam/compiler/sam-output/dot/`
+
+To download and format a FROSTT tensor run the following script:
+```
+cd /sam-artifact/sam
+./scripts/download_frostt.sh
+./scripts/generate_frostt_formats.sh
+```
+
+### SAM Simulator Description
+In our simulation, streams are represented as Python 3 list of numbers and strings. 
+For example, the stream `1, 2, 3, S0, D` would be `[1, 2, 3, 'S0', 'D'] in our SAM simulator.
+
+The source files for each SAM block can be found in `/sam-artifact/sam/sam/sim/src/`
+Each block is modeled using a Python 3 class of the same (or similar) name in the SAM simulator.
+Every block must define methods for its input connections `in_<stream_type>()`,
+output connections `out_<stream_type>()`, and an `update()` function. 
+The `update()` function contains the state-machine logic on what happens at
+each cycle update for a given block. 
+
+Simulation testbench code instantiate objects for each block of that class and then runs a loop that models cycle ticks. 
+Within the loop, all blocks are first connected in the proper order (inputs
+<--> outputs), and then all blocks are updated in topological order. Finally,
+any statistics are collected and the simulation is checked with the gold output
+(if enabled). 
+Since simulation testbenches are run using pytest and pytest-benchmark, all tests that pass are correct. 
+
+### Adding in new SAM Blocks
+If a contributor would like to add in new SAM blocks, they just need to define a class with that name in the under `/sam-artifact/sam/sam/sim/src/`
+The class needs to extend the `Primitive` base class and needs to define the appropriate methods. 
+
+Once the block is added, add a directed unit tests for that primitive in `/sam-artifact/sam/sam/sim/test/primitives/`
+ 
+### Simulating SAM Graphs
+Once the SAM graphs are generated and located in `/sam-artifact/sam/compiler/sam-output/dot/`
+We automatically generate simulation tests using the 
+All simulation testbenches can be found under `/sam-artifact/sam/sam/sim/test/`
+
+Use the following command to run a simulation. *NOTE:* this must be done under
+the `/sam-artifact/sam/sam/sim/` directory. 
+```
+pytest -k <TESTNAME>
+```
+The pytest command also takes in these useful arguments:
+-----------------------------------------------------------------
+| Argument 	 | Description 					|
+-----------------------------------------------------------------
+| `TESTNAME` 	 | The test directory or files to be run	| 
+| `-s` 		 | Forward output to stdout 			| 
+| `--debug-sim`  | Pring sam debugging statements 		| 
+| `--check-gold` | Enable gold checking for the testbench 	|
+| `-v` 		 | Verbose 				 	| 
+| `--cast`	 | Gold produced uses casted (integer) values	|
+| `--ssname` <TENSOR_NAME> | Name of the SuiteSparse tensor to run | 
+| `--frosttname` <TENSOR_NAME> | Name of the synthetic vector tensor to run | 
+| `--vecname` <TENSOR_NAME> | Name of the Frostt tensor to run | 
+-----------------------------------------------------------------
+
+For example, to run simulations for all of the matrix (2-dimensional) tests 
+from Table 1 on the [bcsstm04](https://sparse.tamu.edu/HB/bcsstm04) SuiteSparse
+matrix with gold checking enabled, 
+use the following command: 
+```
+cd /sam-artifact/sam/sam/sim/
+pytest -k test/final-apps/ --ssname bcsstm04 --check-gold
+```
 
 ----
 ## [Optional] Detailed Explanation of What the Top-Level Script Does
