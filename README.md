@@ -204,11 +204,12 @@ We automatically generate simulation tests using the
 All simulation testbenches can be found under `/sam-artifact/sam/sam/sim/test/`
 
 Use the following command to run a simulation. *NOTE:* this must be done under
-the `/sam-artifact/sam/sam/sim/` directory. 
+the `/sam-artifact/sam/sam/sim/` directory or any subdirectory after. 
 ```
 pytest -k <TESTNAME>
 ```
 The pytest command also takes in these useful arguments:
+
 |-------------------------------|-----------------------------------------------|
 | Argument 	 		| Description 					|
 |-------------------------------|-----------------------------------------------|
