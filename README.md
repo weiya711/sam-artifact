@@ -153,28 +153,19 @@ dot -Tpng matmul.gv -o matmul.png
 
 ### Formatting Datasets
 Before running a SAM simulation, we need to make sure the tensors are properly
-formatted. By default SuiteSparse and Frostt tensors come in a coordinate (COO)
+formatted. By default SuiteSparse and most other dataset tensors come in a coordinate (COO)
 file format, however, SAM simulations need tensors to be stored in level-based
 COO, CSR, CSC, DCSR, or DCSC format where each level is a separate file.
 We have already committed two example tensors under the `/sam-artifact/sam/data/`
 for reference.
 
-To download and format a SuiteSparse tensor run the following script:
+To download and format a SuiteSparse tensor for all matrix benchmarks run the following script:
 ```
 cd /sam-artifact/sam
-./scripts/download_unpack_format_suitesparse.sh <TENSOR_NAMES.txt> <BENCH>
+./scripts/download_unpack_format_suitesparse.sh <TENSOR_NAMES.txt> 
 ```
-where `TENSOR_NAMES.txt` is a text file containing all of the names of tensors
-that you would like and `BENCH` is the name of the benchmark. 
+where `TENSOR_NAMES.txt` is a text file containing all of the names of tensors. 
 Example TENSOR_NAMES.txt files can be found under `/sam-artifact/sam/scripts/tensor_names/`.
-Benchmark names match the names of the files in `/sam-artifact/sam/compiler/sam-output/dot/`
-
-To download and format a FROSTT tensor run the following script:
-```
-cd /sam-artifact/sam
-./scripts/download_frostt.sh
-./scripts/generate_frostt_formats.sh
-```
 
 ### SAM Simulator Description
 In our simulation, streams are represented as Python 3 list of numbers and strings. 
@@ -222,8 +213,6 @@ The pytest command also takes in these useful arguments:
 | `-v` 		 		| Verbose 				 	| 
 | `--cast`	 		| Gold produced uses casted (integer) values	|
 | `--ssname <TENSOR_NAME>` 	| Name of the SuiteSparse tensor to run 	| 
-| `--frosttname <TENSOR_NAME>` 	| Name of the synthetic vector tensor to run 	| 
-| `--vecname <TENSOR_NAME>` 	| Name of the Frostt tensor to run 		| 
 
 For example, to run simulations for all of the matrix (2-dimensional) tests 
 from Table 1 on the [bcsstm04](https://sparse.tamu.edu/HB/bcsstm04) SuiteSparse
@@ -231,8 +220,9 @@ matrix with gold checking enabled,
 use the following command: 
 ```
 cd /sam-artifact/sam/sam/sim/
-pytest test/final-apps/ --ssname bcsstm04 --check-gold
+pytest test/final-apps/test_mat_elemmul_FINAL.py --ssname LFAT5 --check-gold
 ```
+*NOTE:* The simulations will fail if their formatted files do not exist (see Section [Format Datasets](#Format-Datasets)) 
 
 ----
 ## [Optional] Detailed Explanation of What the Top-Level Script Does
