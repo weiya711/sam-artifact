@@ -71,7 +71,7 @@ Next, choose one of the three options to run:
    - The second argument of this script can either take a `0` or `1`, where `0`
      omits checking against the gold numpy computation and `1` checks against
      gold.  
-   - *NOTE:* Running with gold (1 as the second argument) will take XX compute-hours.
+   - *NOTE:* Running with gold (1 as the second argument) will take 92 compute-hours.
  
 3. Run `./scripts/single_point_memory_model_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
    ```
@@ -230,7 +230,7 @@ pytest test/final-apps/test_mat_elemmul_FINAL.py --ssname LFAT5 --check-gold
 ### Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
 - Run the following command
   ```
-  cd sam/	# from /sam-artifact/sam/
+  cd /sam-artifact/sam/
   python scripts/collect_node_counts.py
   ```
   - This script will go through each of the SAM graphs for the expressions listed in Table 1 on page 10 and counts the number of each relevant primitive in the graph. 
@@ -289,7 +289,7 @@ create each row of Table 2 on page 10.
        small50, mid50, and large50), and `--out_path` (defaults to
        `suitesparse_benchmarks.txt`, changing this will change the output path for the
        generated list of suitesparse matrix names). Running the script with the
-       default arguments will recreate Figure 14 on page XX. These numbers can be
+       default arguments will recreate Figure 14 on page 12. These numbers can be
        changed 
 - Run a script to get the stream overhead data into json files for the randomly selected Suitesparse matrices above. 
   ```
