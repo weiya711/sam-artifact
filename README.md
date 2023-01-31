@@ -209,7 +209,7 @@ the `/sam-artifact/sam/sam/sim/` directory.
 pytest -k <TESTNAME>
 ```
 The pytest command also takes in these useful arguments:
---------------------------------|-----------------------------------------------|
+|-------------------------------|-----------------------------------------------|
 | Argument 	 		| Description 					|
 |-------------------------------|-----------------------------------------------|
 | `TESTNAME` 	 		| The test directory or files to be run		| 
