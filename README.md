@@ -206,13 +206,14 @@ All simulation testbenches can be found under `/sam-artifact/sam/sam/sim/test/`
 Use the following command to run a simulation. *NOTE:* this must be done under
 the `/sam-artifact/sam/sam/sim/` directory or any subdirectory after. 
 ```
-pytest -k <TESTNAME>
+pytest <LOCATION>  
 ```
+`LOCATION` is the directory or filename that contains the tests you'd like to run.
 The pytest command also takes in these useful arguments:
 
 | Argument 	 		| Description 					|
 |-------------------------------|-----------------------------------------------|
-| `-k <TESTNAME>` 		| The test directory or files to be run		| 
+| `-k <TESTNAME>` 		| The test name to be run			| 
 | `-s` 		 		| Forward output to stdout 			| 
 | `--debug-sim`  		| Pring sam debugging statements 		| 
 | `--check-gold` 		| Enable gold checking for the testbench 	|
@@ -228,7 +229,7 @@ matrix with gold checking enabled,
 use the following command: 
 ```
 cd /sam-artifact/sam/sam/sim/
-pytest -k test/final-apps/ --ssname bcsstm04 --check-gold
+pytest test/final-apps/ --ssname bcsstm04 --check-gold
 ```
 
 ----
