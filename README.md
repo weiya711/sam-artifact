@@ -8,7 +8,8 @@ Repo for SAM artifact generation
     - Run Figure 15: ExTensor Memory Model (5 human-minutes + up to 50 compute-hours) 
 - Validate All Results
 - How to Reuse Artifact Beyond the Paper ( X human-minutes + X compute-minutes )
-- [Optional] Detailed Breakdown of Top-Level Script 
+----
+- [Optional] Detailed Explanation of What the Top-Level Script Does 
     - Run and Validate Table 1: SAM Graph Properties (5 human-minutes + 1 compute-minutes)
     - Run and Validate Table 2: TACO Website Expressions (10 human-minutes + 10 compute-minutes)
     - Run Figure 11, 12, 13:  (2 human-minutes + 10 compute-minutes)
@@ -28,12 +29,17 @@ This guide assumes the user has a working installation of Docker and some versio
   - The above command should print out a `CONTAINER_ID`
 - Attach to the docker container using the command below and the `CONTAINER_ID` from the previous step 
   ```
-  docker attach CONTAINER_ID
+  docker attach <CONTAINER_ID>
   ```
 - *IMPORTANT:* Do not type `exit` in the docker terminal as this will kill the container. The proper way to exit the docker is the sequence `CTRL-p, CTRL-q`.
 
 ## Run Top-Level Script (5 human-minutes + 1 compute-hour)
-TODO
+Run the following commands to generate logs for Table 1, Table 2, and Figures 11-14: 
+```
+cd /sam-artifact/sam
+source scripts/generate_all_results.sh -m <OPTION>
+```
+where 
 
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
@@ -67,7 +73,7 @@ Next, choose one of the three options to run:
  
 3. Run `./scripts/single_point_memory_model_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
    ```
-   ./scripts/single_point_memory_model_runner.sh extensor_NNZ_DIMSIZE.mtx
+   ./scripts/single_point_memory_model_runner.sh extensor_<NNZ>_<DIMSIZE>.mtx
    ```
    - where `NNZ` is the number of nonzeros for each matrix (and point plotted in Figure 15). `NNZ` can be values [5000, 10000, 25000, or 50000] 
    - where `DIMSIZE` is the dense dimension size for each matrix (and point plotted in Figure 15). `DIMSIZE` can be values (TODO, list all the dense dimensions sizes). 
@@ -96,12 +102,12 @@ Next, choose one of the three options to run:
 - Exit the docker (`CTRL-p, CTRL-q`)
 - To extract all of the images/figures from the docker to your local machine for viewing, run the following command. This needs to be done from outside the docker, starting at the top directory of this repository (`sam-artifact`).
   ```
-  python sam/scripts/artifact_docker_copy.py --output_dir <OUTPUT_DIRECTORY> --docker_id <DOCKER_ID>
+  python sam/scripts/artifact_docker_copy.py --output_dir <OUTPUT_DIRECTORY> --docker_id <CONTAINER_ID>
   ```
   - `artifact_docker_copy.py` runs a series of `docker cp` commands to pull the figures from their default locations, renaming them to be clear which figure they correspond to in the main manuscript.
   - `--output_dir` is used to specify an output directory on the local machine for the figures to be stored in. The script will create the directory if it does not exist. All the files referenced in the next few steps will be found at this directory.
   - `--docker_id` is used to identify the docker container ID. This should have printed when the docker was created and is the same ID used to attach to the container.
-    You may also retrieve the `DOCKER_ID` again by running `docker ps` in your terminal.
+    You may also retrieve the `CONTAINER_ID` again by running `docker ps` in your terminal.
 
 - Validate that the log in `tab1.log` matches Table 1 on page 10.
 - Validate that the log in `tab2.log` matches Table 2 on page 10.
@@ -115,7 +121,9 @@ Next, choose one of the three options to run:
 
 ## How to Reuse Artifact Beyond the Paper 
 
-## [Optional] 
+
+----
+## [Optional] Detailed Explanation of What the Top-Level Script Does
 
 ### Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
 - Run the following command
