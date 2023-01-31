@@ -33,7 +33,14 @@ This guide assumes the user has a working installation of Docker and some versio
 - *IMPORTANT:* Do not type `exit` in the docker terminal as this will kill the container. The proper way to exit the docker is the sequence `CTRL-p, CTRL-q`.
 
 ## Run Top-Level Script (5 human-minutes + 1 compute-hour)
-TODO
+
+We provide a script to generate all of the results within the container and an additional script that will copy out the results for viewing on the user's local machine.
+
+- Within the Docker container, run the following commands to generate all results:
+  ```
+  source /sam-artifact/scripts/generate_all_results.sh
+  ```
+- Upon completion, leave the docker
 
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
