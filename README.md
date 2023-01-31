@@ -71,7 +71,7 @@ Next, choose one of the three options to run:
    - The second argument of this script can either take a `0` or `1`, where `0`
      omits checking against the gold numpy computation and `1` checks against
      gold.  
-   - *NOTE:* Running with gold (1 as the second argument) will take XX compute-hours.
+   - *NOTE:* Running with gold (1 as the second argument) will take 92 compute-hours.
  
 3. Run `./scripts/single_point_memory_model_runner.sh` to run a single point from Figure 15 on page 12 that will take variable time depending on which point is chosen. The full command is:
    ```
