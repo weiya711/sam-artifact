@@ -34,13 +34,13 @@ This guide assumes the user has a working installation of Docker and some versio
 - *IMPORTANT:* Do not type `exit` in the docker terminal as this will kill the container. The proper way to exit the docker is the sequence `CTRL-p, CTRL-q`.
 
 ## Run Top-Level Script (5 human-minutes + 1 compute-hour)
-Run the following commands to generate logs for Table 1, Table 2, and Figures 11-14: 
-```
-cd /sam-artifact/sam
-source scripts/generate_all_results.sh -m <OPTION>
-```
-where 
+We provide a script to generate all of the results within the container and an additional script that will copy out the results for viewing on the user's local machine.
 
+- Within the Docker container, run the following commands to generate all results:
+  ```
+  source /sam-artifact/scripts/generate_all_results.sh
+  ```
+- Once this completes, you can extract the tables/figures from the Docker container by following the instructions in the section **Validate Figure Results** in this README.
  
 ## Run Figure 15: Memory Model  (10 human-minutes + between 30 compute-minutes to 92 compute-hours)
 - Run the following command which creates a `sam-artifact/sam/extensor_mtx` directory and generates pre-tiled synthetic matrices (about 8 compute-minutes).
