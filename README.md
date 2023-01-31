@@ -121,7 +121,9 @@ Next, choose one of the three options to run:
 - Validate that the plot in `fig14.pdf` matches Figure 14 on page 12.
 - Validate that the plot in `fig15.pdf` matches Figure 15 on page 12.
 
-## How to Reuse Artifact Beyond the Paper 
+-----
+
+## [Optional] How to Reuse Artifact Beyond the Paper 
 Please note that all active development beyond this paper is located in 
 the [sam](https://github.com/weiya711/sam/) repository and not the
 [sam-artifact](https://github.com/weiya711/sam-artifact/) (this) repository.
@@ -224,7 +226,6 @@ pytest test/final-apps/test_mat_elemmul_FINAL.py --ssname LFAT5 --check-gold
 ```
 *NOTE:* The simulations will fail if their formatted files do not exist (see Section [Format Datasets](#Format-Datasets)) 
 
-----
 ## [Optional] Detailed Explanation of What the Top-Level Script Does
 
 ### Run and Validate Table 1 (5 human-minutes + 1 compute-minutes)
