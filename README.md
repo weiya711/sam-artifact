@@ -120,7 +120,7 @@ Next, choose one of the three options to run:
 - Validate that the plot in `fig15.pdf` matches Figure 15 on page 12.
 
 ## How to Reuse Artifact Beyond the Paper 
-Please note that all active development beyond this paper are located in 
+Please note that all active development beyond this paper is located in 
 the [sam](https://github.com/weiya711/sam/) repository and not the
 [sam-artifact](https://github.com/weiya711/sam-artifact/) (this) repository.
 The sam repository is already included as a submodule within this repository. 
@@ -131,7 +131,7 @@ generates SAM graphs represented in the Graphviz DOT file format.
 In the artifact evaluation our `Dockerfile` calls `make sam` which uses Custard
 to generates the multiple SAM graphs for Table 1. All DOT files generated can be found at 
 `/sam-artifact/sam/compiler/sam-output/dot/` and all PNG visualizations of the DOT graphs can be found at 
-`/sam-artifact/sam/compiler/sam-output/png/`. If you would like to view one of the PNGs, please copy them over from the Docker to your local machine my modifying the `/sam-artifact/sam/scripts/artifact_docker_copy.py` Python script.
+`/sam-artifact/sam/compiler/sam-output/png/`. If you would like to view one of the PNGs, please copy them over from the Docker to your local machine by modifying the `/sam-artifact/sam/scripts/artifact_docker_copy.py` Python script.
 
 Beyond the graphs generated in the evaluation, you can try running the following commands to envoke Custard
 ```
@@ -139,7 +139,7 @@ cd /sam-artifact/sam/compiler/taco/build
 ./bin/taco <EXPRESSION> <FORMAT> <SCHEDULE> --print-sam-graph=<FILE.gv>
 dot -Tpng <FILE.gv> -o <FILE.png>		# Converts DOT graph to PNG
 ```
-*NOTE:* `<FILE> cannot have hyphens (-) or underscores (_) in the name. 
+*NOTE:* `<FILE>` cannot have hyphens (-) or underscores (_) in the name. 
 Use `./bin/taco --help` for specific instructions on arguments to the compiler. Generally, `EXPRESSION` is a concrete index notation expression, `FORMAT` defines the tensor formats using the TACO format language, and `SCHEDULE` defines a schedule using the TACO scheduling language.
 
 An example command for SpM\*SpM IJK dataflow would be  
@@ -193,10 +193,10 @@ any statistics are collected and the simulation is checked with the gold output
 Since simulation testbenches are run using pytest and pytest-benchmark, all tests that pass are correct. 
 
 ### Adding in new SAM Blocks
-If a contributor would like to add in new SAM blocks, they just need to define a class with that name in the under `/sam-artifact/sam/sam/sim/src/`
+If a contributor would like to add in new SAM blocks, they just need to define a class with that name under `/sam-artifact/sam/sam/sim/src/`.
 The class needs to extend the `Primitive` base class and needs to define the appropriate methods. 
 
-Once the block is added, add a directed unit tests for that primitive in `/sam-artifact/sam/sam/sim/test/primitives/`
+Once the block is added, add a directed unit test for that primitive in `/sam-artifact/sam/sam/sim/test/primitives/`
  
 ### Simulating SAM Graphs
 Once the SAM graphs are generated and located in `/sam-artifact/sam/compiler/sam-output/dot/`
