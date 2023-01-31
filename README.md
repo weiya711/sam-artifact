@@ -122,7 +122,7 @@ Next, choose one of the three options to run:
 ## How to Reuse Artifact Beyond the Paper 
 Please note that all active development beyond this paper are located in 
 the [sam](https://github.com/weiya711/sam/) repository and not the
-[sam-artifact](https://github.com/weiya711/sam-artifact/)` (this) repository.
+[sam-artifact](https://github.com/weiya711/sam-artifact/) (this) repository.
 The sam repository is already included as a submodule within this repository. 
 
 ### The Custard Compiler
@@ -176,7 +176,7 @@ cd /sam-artifact/sam
 
 ### SAM Simulator Description
 In our simulation, streams are represented as Python 3 list of numbers and strings. 
-For example, the stream `1, 2, 3, S0, D` would be `[1, 2, 3, 'S0', 'D'] in our SAM simulator.
+For example, the stream `1, 2, 3, S0, D` would be `[1, 2, 3, 'S0', 'D']` in our SAM simulator.
 
 The source files for each SAM block can be found in `/sam-artifact/sam/sam/sim/src/`
 Each block is modeled using a Python 3 class of the same (or similar) name in the SAM simulator.
@@ -209,19 +209,19 @@ the `/sam-artifact/sam/sam/sim/` directory.
 pytest -k <TESTNAME>
 ```
 The pytest command also takes in these useful arguments:
------------------------------------------------------------------
-| Argument 	 | Description 					|
------------------------------------------------------------------
-| `TESTNAME` 	 | The test directory or files to be run	| 
-| `-s` 		 | Forward output to stdout 			| 
-| `--debug-sim`  | Pring sam debugging statements 		| 
-| `--check-gold` | Enable gold checking for the testbench 	|
-| `-v` 		 | Verbose 				 	| 
-| `--cast`	 | Gold produced uses casted (integer) values	|
-| `--ssname` <TENSOR_NAME> | Name of the SuiteSparse tensor to run | 
-| `--frosttname` <TENSOR_NAME> | Name of the synthetic vector tensor to run | 
-| `--vecname` <TENSOR_NAME> | Name of the Frostt tensor to run | 
------------------------------------------------------------------
+--------------------------------|-----------------------------------------------|
+| Argument 	 		| Description 					|
+|-------------------------------|-----------------------------------------------|
+| `TESTNAME` 	 		| The test directory or files to be run		| 
+| `-s` 		 		| Forward output to stdout 			| 
+| `--debug-sim`  		| Pring sam debugging statements 		| 
+| `--check-gold` 		| Enable gold checking for the testbench 	|
+| `-v` 		 		| Verbose 				 	| 
+| `--cast`	 		| Gold produced uses casted (integer) values	|
+| `--ssname <TENSOR_NAME>` 	| Name of the SuiteSparse tensor to run 	| 
+| `--frosttname <TENSOR_NAME>` 	| Name of the synthetic vector tensor to run 	| 
+| `--vecname <TENSOR_NAME>` 	| Name of the Frostt tensor to run 		| 
+|-------------------------------|-----------------------------------------------|
 
 For example, to run simulations for all of the matrix (2-dimensional) tests 
 from Table 1 on the [bcsstm04](https://sparse.tamu.edu/HB/bcsstm04) SuiteSparse
