@@ -139,14 +139,14 @@ cd /sam-artifact/sam/compiler/taco/build
 ./bin/taco <EXPRESSION> <FORMAT> <SCHEDULE> --print-sam-graph=<FILE.gv>
 dot -Tpng <FILE.gv> -o <FILE.png>		# Converts DOT graph to PNG
 ```
-
+*NOTE:* `<FILE> cannot have hyphens (-) or underscores (_) in the name. 
 Use `./bin/taco --help` for specific instructions on arguments to the compiler. Generally, `EXPRESSION` is a concrete index notation expression, `FORMAT` defines the tensor formats using the TACO format language, and `SCHEDULE` defines a schedule using the TACO scheduling language.
 
 An example command for SpM\*SpM IJK dataflow would be  
 ```
 cd /sam-artifact/sam/compiler/taco/build
-./bin/taco "X(i,j)=B(i,k)*C(k,j)" -f=X:ss -f=B:ss -f=C:ss:1,0 -s="reorder(i,j,k)" --print-sam-graph=matmul_ijk.gv
-dot -Tpng matmul_ikj.gv -o matmul_ijk.png
+./bin/taco "X(i,j)=B(i,k)*C(k,j)" -f=X:ss -f=B:ss -f=C:ss:1,0 -s="reorder(i,j,k)" --print-sam-graph=matmul.gv
+dot -Tpng matmul.gv -o matmul.png
 ```
 
 ### Formatting Datasets
@@ -210,10 +210,9 @@ pytest -k <TESTNAME>
 ```
 The pytest command also takes in these useful arguments:
 
-|-------------------------------|-----------------------------------------------|
 | Argument 	 		| Description 					|
 |-------------------------------|-----------------------------------------------|
-| `TESTNAME` 	 		| The test directory or files to be run		| 
+| `-k <TESTNAME>` 		| The test directory or files to be run		| 
 | `-s` 		 		| Forward output to stdout 			| 
 | `--debug-sim`  		| Pring sam debugging statements 		| 
 | `--check-gold` 		| Enable gold checking for the testbench 	|
@@ -222,7 +221,6 @@ The pytest command also takes in these useful arguments:
 | `--ssname <TENSOR_NAME>` 	| Name of the SuiteSparse tensor to run 	| 
 | `--frosttname <TENSOR_NAME>` 	| Name of the synthetic vector tensor to run 	| 
 | `--vecname <TENSOR_NAME>` 	| Name of the Frostt tensor to run 		| 
-|-------------------------------|-----------------------------------------------|
 
 For example, to run simulations for all of the matrix (2-dimensional) tests 
 from Table 1 on the [bcsstm04](https://sparse.tamu.edu/HB/bcsstm04) SuiteSparse
